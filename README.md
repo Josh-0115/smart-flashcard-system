@@ -86,7 +86,7 @@ Retrieve flashcards example:
 ```
 curl "http://127.0.0.1:5000/get-subject?student_id=stu001&limit=5"
 ```
-Let me know if you’d like this in `.md` format as a downloadable file or help with deployment.
+
 
 
 
