@@ -1,86 +1,98 @@
 # 🧠 Smart Flashcard System Backend
 
-This is a Flask-based backend application for a smart flashcard system that allows students to add flashcards without specifying the subject. The system uses rule-based inference to automatically classify each flashcard into a subject based on its content. It also provides an API to retrieve a mixed batch of flashcards from different subjects for efficient revision.
+This is a Flask-based backend server for a smart flashcard system. It allows users to add flashcards with automatic subject inference and retrieve flashcards mixed by subject for a specific student.
 
----
+## Features
 
-## 📘 Features
+- Add flashcards via POST `/flashcard` with automatic subject detection.
+- Retrieve a mixed batch of flashcards by student via GET `/get-subject`.
 
-- 🔍 **Subject Inference**: Automatically detects the subject of each flashcard using keyword-based rules.
-- 📥 **Add Flashcards**: Simple API to submit flashcards with a question and answer.
-- 📤 **Retrieve Flashcards**: Get a shuffled mix of flashcards from different subjects for a specific student.
-- 🗃️ **SQLite Database**: All data is stored locally in a lightweight database.
+## API Endpoints
 
----
+### Add Flashcard
 
-## ⚙️ Installation & Setup
+**POST** `/flashcard`
 
-1. **Clone the Repository**
-```bash
-git clone https://github.com/Josh-0115/smart-flashcard-system.git
-cd smart-flashcard-system
-Create a Virtual Environment (optional but recommended)
+Request JSON body example:
 
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-Install Dependencies
-
-pip install -r requirements.txt
-Run the Flask App
-
-python app.py
-The server will run at http://127.0.0.1:5000/
-
-📡 API Endpoints
-➕ Add a Flashcard
-POST /flashcard
-
-Request
-
+```json
 {
   "student_id": "stu001",
   "question": "What is Newton's Second Law?",
   "answer": "Force equals mass times acceleration"
 }
 
-Response
-
+```
+Response example:
+```
 {
   "message": "Flashcard added successfully",
   "subject": "Physics"
 }
-
-🎲 Get Flashcards by Mixed Subjects
+```
+Get Flashcards by Mixed Subjects
 GET /get-subject?student_id=stu001&limit=5
 
-Sample Response
+Query Parameters:
 
+student_id (required): The student ID to retrieve flashcards for.
+limit (optional, default 5): Maximum number of flashcards to return.
+Response example:
+```
 [
   {
+    "student_id": "stu001",
     "question": "What is Newton's Second Law?",
     "answer": "Force equals mass times acceleration",
     "subject": "Physics"
   },
   {
+    "student_id": "stu001",
     "question": "What is photosynthesis?",
     "answer": "A process used by plants to convert light into energy",
     "subject": "Biology"
   }
 ]
+```
+Installation
+1. Clone the repository:
+```
+git clone https://github.com/yourusername/smart-flashcard-system.git
+cd smart-flashcard-system
+```
+2. Create a virtual environment (optional but recommended):
+```
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+3. Install dependencies:
+```
+pip install flask
+```
+4. Run the application:
+```
+python app.py
+```
+The server will start at `http://127.0.0.1:5000`.
 
-📝 Notes
-Subject classification is rule-based (e.g., "photosynthesis" → "Biology").
+Testing the API
+You can use curl or any API client like Postman.
 
-The app supports multiple students by using the student_id.
-
-Data is stored in flashcards.db using SQLite.
-
-📬 Contact
-For any issues or suggestions, feel free to raise an issue or contact the maintainer.
-
----
-
+Add flashcard example:
+```
+curl -X POST http://127.0.0.1:5000/flashcard -H "Content-Type: application/json" -d '{"student_id":"stu001","question":"What is photosynthesis?","answer":"A process used by plants to convert light into energy"}'
+```
+Retrieve flashcards example:
+```
+curl "http://127.0.0.1:5000/get-subject?student_id=stu001&limit=5"
+```
 Let me know if you’d like this in `.md` format as a downloadable file or help with deployment.
+
+
+
+
+
+
 
 
 
